@@ -2,26 +2,19 @@ import tkinter as tk
 from tkinter import ttk
 
 
-def insert_treeview_entry(tree, piid, iid, d):
+def insert_treeview_entry(tree, piid, d):
     if isinstance(d, dict):
-        key = next(iter(d))
-        tree.insert(piid, tk.END, iid, text=key)
-        children = d[key]
-        if not isinstance(children, list):
-            children = [children]
-        for i, entry in enumerate(children):
-            insert_treeview_entry(tree, iid, iid + "-" + str(i), entry)
-    elif isinstance(d, str):
-        tree.insert(piid, tk.END, iid, text=d)
-    else:
-        print("Error: entry is not dict or text")
+        for i, (k, v) in enumerate(d.items()):
+            iid = piid + "-" + str(i)
+            tree.insert(piid, tk.END, iid, text=k)
+            insert_treeview_entry(tree, iid, v)
 
 
 def show_treeview(data_dict, row_height=45):
     # create root window
     window = tk.Tk()
     window.title("Treeview - Hierarchical Data")
-    # window.geometry('400x200')
+    window.geometry('600x900')
 
     # configure the grid layout
     window.rowconfigure(0, weight=1)
@@ -31,10 +24,7 @@ def show_treeview(data_dict, row_height=45):
 
     # create a treeview
     tree = ttk.Treeview(window)
-    if not isinstance(data_dict, list):
-        data_dict = [data_dict]
-    for i, entry in enumerate(data_dict):
-        insert_treeview_entry(tree, "", str(i), entry)
+    insert_treeview_entry(tree, "", data_dict)
 
     # place the Treeview widget on the root window
     tree.grid(row=0, column=0, sticky=tk.NSEW)
