@@ -21,7 +21,8 @@ class Node:
             ):  # add nodes as grandchildren of the last child
                 node_lists.insert(0, node)
                 last_child.add_children(node_lists)
-            elif node.level <= self.level:  # this node is a sibling, no more children
+            elif node.level <= self.level:
+                # this node is a sibling, no more children
                 node_lists.insert(0, node)
                 return
 
@@ -151,9 +152,10 @@ class XCALMsgTable:
         N = len(column_names)
         for line in value_lines:
             values = line.strip().split()
-            # right align
+            # The misalignment is caused by empty slot
+            # So the first column, table index is aligned
             if len(values) < N:
-                values = [None] * (N - len(values)) + values
+                values = values[0] + [None] * (N - len(values)) + values[1:]
             column_values.append(values)
 
         # df

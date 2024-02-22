@@ -5,7 +5,7 @@ import code
 tab = xcalparser.PDSCHMsg()
 
 result = []
-n = 1
+n = 6000
 while n > 0:
     if len(tab.data) > 0:
       result.append(tab.data[-1])
@@ -13,7 +13,9 @@ while n > 0:
     tab.parse_next()
 
 df = pd.concat(result, ignore_index=True)
+df.to_csv("./pdsch-{}.csv".format(4))
 
+exit()
 # debug
 code.interact(local=locals())
 

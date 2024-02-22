@@ -14,5 +14,5 @@ while n > 0:
     tab.parse_next()
 
 df = pd.concat(result, ignore_index=True)
-df.to_csv("./DCI-{}.csv", random.randint(0, 10))
+df.to_csv("./dci-{}.csv".format(0), ignore_index=True)
 # code.interact(local=locals())
