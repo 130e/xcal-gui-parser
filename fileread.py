@@ -155,7 +155,7 @@ class XCALMsgTable:
             # The misalignment is caused by empty slot
             # So the first column, table index is aligned
             if len(values) < N:
-                values = values[0] + [None] * (N - len(values)) + values[1:]
+                values = [values[0]] + [None] * (N - len(values)) + values[1:]
             column_values.append(values)
 
         # df
